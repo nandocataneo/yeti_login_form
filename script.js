@@ -30,6 +30,7 @@ var emailLabel = document.querySelector("#loginEmailLabel"),
   hair = document.querySelector(".hair"),
   bodyBG = document.querySelector(".bodyBGnormal"),
   bodyBGchanged = document.querySelector(".bodyBGchanged");
+gsap.registerPlugin(MorphSVGPlugin);
 var activeElement,
   curEmailIndex,
   screenCenter,
@@ -172,60 +173,18 @@ function calculateFaceMove(e) {
   hairX = Math.cos(mouthAngle) * 6;
   hairS = 1.2;
 
-  TweenMax.to(eyeL, 1, { x: -eyeLX, y: -eyeLY, ease: Expo.easeOut });
-  TweenMax.to(eyeR, 1, { x: -eyeRX, y: -eyeRY, ease: Expo.easeOut });
-  TweenMax.to(nose, 1, {
-    x: -noseX,
-    y: -noseY,
-    rotation: mouthR,
-    transformOrigin: "center center",
-    ease: Expo.easeOut
-  });
-  TweenMax.to(mouth, 1, {
-    x: -mouthX,
-    y: -mouthY,
-    rotation: mouthR,
-    transformOrigin: "center center",
-    ease: Expo.easeOut
-  });
-  TweenMax.to(chin, 1, {
-    x: -chinX,
-    y: -chinY,
-    scaleY: chinS,
-    ease: Expo.easeOut
-  });
-  TweenMax.to(face, 1, {
-    x: -faceX,
-    y: -faceY,
-    skewX: -faceSkew,
-    transformOrigin: "center top",
-    ease: Expo.easeOut
-  });
-  TweenMax.to(eyebrow, 1, {
-    x: -faceX,
-    y: -faceY,
-    skewX: -eyebrowSkew,
-    transformOrigin: "center top",
-    ease: Expo.easeOut
-  });
-  TweenMax.to(outerEarL, 1, {
-    x: outerEarX,
-    y: -outerEarY,
-    ease: Expo.easeOut
-  });
-  TweenMax.to(outerEarR, 1, { x: outerEarX, y: outerEarY, ease: Expo.easeOut });
-  TweenMax.to(earHairL, 1, {
-    x: -outerEarX,
-    y: -outerEarY,
-    ease: Expo.easeOut
-  });
-  TweenMax.to(earHairR, 1, { x: -outerEarX, y: outerEarY, ease: Expo.easeOut });
-  TweenMax.to(hair, 1, {
-    x: hairX,
-    scaleY: hairS,
-    transformOrigin: "center bottom",
-    ease: Expo.easeOut
-  });
+  gsap.to(eyeL, { duration: 1, x: -eyeLX, y: -eyeLY, ease: "expo.out" });
+  gsap.to(eyeR, { duration: 1, x: -eyeRX, y: -eyeRY, ease: "expo.out" });
+  gsap.to(nose, { duration: 1, x: -noseX, y: -noseY, rotation: mouthR, transformOrigin: "center center", ease: "expo.out" });
+  gsap.to(mouth, { duration: 1, x: -mouthX, y: -mouthY, rotation: mouthR, transformOrigin: "center center", ease: "expo.out" });
+  gsap.to(chin, { duration: 1, x: -chinX, y: -chinY, scaleY: chinS, ease: "expo.out" });
+  gsap.to(face, { duration: 1, x: -faceX, y: -faceY, skewX: -faceSkew, transformOrigin: "center top", ease: "expo.out" });
+  gsap.to(eyebrow, { duration: 1, x: -faceX, y: -faceY, skewX: -eyebrowSkew, transformOrigin: "center top", ease: "expo.out" });
+  gsap.to(outerEarL, { duration: 1, x: outerEarX, y: -outerEarY, ease: "expo.out" });
+  gsap.to(outerEarR, { duration: 1, x: outerEarX, y: outerEarY, ease: "expo.out" });
+  gsap.to(earHairL, { duration: 1, x: -outerEarX, y: -outerEarY, ease: "expo.out" });
+  gsap.to(earHairR, { duration: 1, x: -outerEarX, y: outerEarY, ease: "expo.out" });
+  gsap.to(hair, { duration: 1, x: hairX, scaleY: hairS, transformOrigin: "center bottom", ease: "expo.out" });
 
   document.body.removeChild(div);
 }
@@ -239,60 +198,33 @@ function onEmailInput(e) {
   if (curEmailIndex > 0) {
     if (mouthStatus == "small") {
       mouthStatus = "medium";
-      TweenMax.to([mouthBG, mouthOutline, mouthMaskPath], 1, {
-        morphSVG: mouthMediumBG,
-        shapeIndex: 8,
-        ease: Expo.easeOut
-      });
-      TweenMax.to(tooth, 1, { x: 0, y: 0, ease: Expo.easeOut });
-      TweenMax.to(tongue, 1, { x: 0, y: 1, ease: Expo.easeOut });
-      TweenMax.to([eyeL, eyeR], 1, {
-        scaleX: 0.85,
-        scaleY: 0.85,
-        ease: Expo.easeOut
-      });
+      gsap.to([mouthBG, mouthOutline, mouthMaskPath], { duration: 1, morphSVG: mouthMediumBG, shapeIndex: 8, ease: "expo.out" });
+      gsap.to(tooth, { duration: 1, x: 0, y: 0, ease: "expo.out" });
+      gsap.to(tongue, { duration: 1, x: 0, y: 1, ease: "expo.out" });
+      gsap.to([eyeL, eyeR], { duration: 1, scaleX: 0.85, scaleY: 0.85, ease: "expo.out" });
       eyeScale = 0.85;
     }
     if (value.includes("@")) {
       mouthStatus = "large";
-      TweenMax.to([mouthBG, mouthOutline, mouthMaskPath], 1, {
-        morphSVG: mouthLargeBG,
-        ease: Expo.easeOut
-      });
-      TweenMax.to(tooth, 1, { x: 3, y: -2, ease: Expo.easeOut });
-      TweenMax.to(tongue, 1, { y: 2, ease: Expo.easeOut });
-      TweenMax.to([eyeL, eyeR], 1, {
-        scaleX: 0.65,
-        scaleY: 0.65,
-        ease: Expo.easeOut,
-        transformOrigin: "center center"
-      });
+      gsap.to([mouthBG, mouthOutline, mouthMaskPath], { duration: 1, morphSVG: mouthLargeBG, ease: "expo.out" });
+      gsap.to(tooth, { duration: 1, x: 3, y: -2, ease: "expo.out" });
+      gsap.to(tongue, { duration: 1, y: 2, ease: "expo.out" });
+      gsap.to([eyeL, eyeR], { duration: 1, scaleX: 0.65, scaleY: 0.65, ease: "expo.out", transformOrigin: "center center" });
       eyeScale = 0.65;
     } else {
       mouthStatus = "medium";
-      TweenMax.to([mouthBG, mouthOutline, mouthMaskPath], 1, {
-        morphSVG: mouthMediumBG,
-        ease: Expo.easeOut
-      });
-      TweenMax.to(tooth, 1, { x: 0, y: 0, ease: Expo.easeOut });
-      TweenMax.to(tongue, 1, { x: 0, y: 1, ease: Expo.easeOut });
-      TweenMax.to([eyeL, eyeR], 1, {
-        scaleX: 0.85,
-        scaleY: 0.85,
-        ease: Expo.easeOut
-      });
+      gsap.to([mouthBG, mouthOutline, mouthMaskPath], { duration: 1, morphSVG: mouthMediumBG, ease: "expo.out" });
+      gsap.to(tooth, { duration: 1, x: 0, y: 0, ease: "expo.out" });
+      gsap.to(tongue, { duration: 1, x: 0, y: 1, ease: "expo.out" });
+      gsap.to([eyeL, eyeR], { duration: 1, scaleX: 0.85, scaleY: 0.85, ease: "expo.out" });
       eyeScale = 0.85;
     }
   } else {
     mouthStatus = "small";
-    TweenMax.to([mouthBG, mouthOutline, mouthMaskPath], 1, {
-      morphSVG: mouthSmallBG,
-      shapeIndex: 9,
-      ease: Expo.easeOut
-    });
-    TweenMax.to(tooth, 1, { x: 0, y: 0, ease: Expo.easeOut });
-    TweenMax.to(tongue, 1, { y: 0, ease: Expo.easeOut });
-    TweenMax.to([eyeL, eyeR], 1, { scaleX: 1, scaleY: 1, ease: Expo.easeOut });
+    gsap.to([mouthBG, mouthOutline, mouthMaskPath], { duration: 1, morphSVG: mouthSmallBG, shapeIndex: 9, ease: "expo.out" });
+    gsap.to(tooth, { duration: 1, x: 0, y: 0, ease: "expo.out" });
+    gsap.to(tongue, { duration: 1, y: 0, ease: "expo.out" });
+    gsap.to([eyeL, eyeR], { duration: 1, scaleX: 1, scaleY: 1, ease: "expo.out" });
     eyeScale = 1;
   }
 }
@@ -388,75 +320,39 @@ function onPasswordToggleClick(e) {
 }
 
 function spreadFingers() {
-  TweenMax.to(twoFingers, 0.35, {
-    transformOrigin: "bottom left",
-    rotation: 30,
-    x: -9,
-    y: -2,
-    ease: Power2.easeInOut
-  });
+  gsap.to(twoFingers, { duration: 0.35, transformOrigin: "bottom left", rotation: 30, x: -9, y: -2, ease: "power2.inOut" });
 }
 
 function closeFingers() {
-  TweenMax.to(twoFingers, 0.35, {
-    transformOrigin: "bottom left",
-    rotation: 0,
-    x: 0,
-    y: 0,
-    ease: Power2.easeInOut
-  });
+  gsap.to(twoFingers, { duration: 0.35, transformOrigin: "bottom left", rotation: 0, x: 0, y: 0, ease: "power2.inOut" });
 }
 
 function coverEyes() {
-  TweenMax.killTweensOf([armL, armR]);
-  TweenMax.set([armL, armR], { visibility: "visible" });
-  TweenMax.to(armL, 0.45, { x: -93, y: 10, rotation: 0, ease: Quad.easeOut });
-  TweenMax.to(armR, 0.45, {
-    x: -93,
-    y: 10,
-    rotation: 0,
-    ease: Quad.easeOut,
-    delay: 0.1
-  });
-  TweenMax.to(bodyBG, 0.45, { morphSVG: bodyBGchanged, ease: Quad.easeOut });
+  gsap.killTweensOf([armL, armR]);
+  gsap.set([armL, armR], { visibility: "visible" });
+  gsap.to(armL, { duration: 0.45, x: -93, y: 10, rotation: 0, ease: "quad.out" });
+  gsap.to(armR, { duration: 0.45, x: -93, y: 10, rotation: 0, ease: "quad.out", delay: 0.1 });
+  gsap.to(bodyBG, { duration: 0.45, morphSVG: bodyBGchanged, ease: "quad.out" });
   eyesCovered = true;
 }
 
 function uncoverEyes() {
-  TweenMax.killTweensOf([armL, armR]);
-  TweenMax.to(armL, 1.35, { y: 220, ease: Quad.easeOut });
-  TweenMax.to(armL, 1.35, { rotation: 105, ease: Quad.easeOut, delay: 0.1 });
-  TweenMax.to(armR, 1.35, { y: 220, ease: Quad.easeOut });
-  TweenMax.to(armR, 1.35, {
-    rotation: -105,
-    ease: Quad.easeOut,
-    delay: 0.1,
-    onComplete: function () {
-      TweenMax.set([armL, armR], { visibility: "hidden" });
-    }
-  });
-  TweenMax.to(bodyBG, 0.45, { morphSVG: bodyBG, ease: Quad.easeOut });
+  gsap.killTweensOf([armL, armR]);
+  gsap.to(armL, { duration: 1.35, y: 220, ease: "quad.out" });
+  gsap.to(armL, { duration: 1.35, rotation: 105, ease: "quad.out", delay: 0.1 });
+  gsap.to(armR, { duration: 1.35, y: 220, ease: "quad.out" });
+  gsap.to(armR, { duration: 1.35, rotation: -105, ease: "quad.out", delay: 0.1, onComplete: function () { gsap.set([armL, armR], { visibility: "hidden" }); } });
+  gsap.to(bodyBG, { duration: 0.45, morphSVG: bodyBG, ease: "quad.out" });
   eyesCovered = false;
 }
 
 function resetFace() {
-  TweenMax.to([eyeL, eyeR], 1, { x: 0, y: 0, ease: Expo.easeOut });
-  TweenMax.to(nose, 1, {
-    x: 0,
-    y: 0,
-    scaleX: 1,
-    scaleY: 1,
-    ease: Expo.easeOut
-  });
-  TweenMax.to(mouth, 1, { x: 0, y: 0, rotation: 0, ease: Expo.easeOut });
-  TweenMax.to(chin, 1, { x: 0, y: 0, scaleY: 1, ease: Expo.easeOut });
-  TweenMax.to([face, eyebrow], 1, { x: 0, y: 0, skewX: 0, ease: Expo.easeOut });
-  TweenMax.to([outerEarL, outerEarR, earHairL, earHairR, hair], 1, {
-    x: 0,
-    y: 0,
-    scaleY: 1,
-    ease: Expo.easeOut
-  });
+  gsap.to([eyeL, eyeR], { duration: 1, x: 0, y: 0, ease: "expo.out" });
+  gsap.to(nose, { duration: 1, x: 0, y: 0, scaleX: 1, scaleY: 1, ease: "expo.out" });
+  gsap.to(mouth, { duration: 1, x: 0, y: 0, rotation: 0, ease: "expo.out" });
+  gsap.to(chin, { duration: 1, x: 0, y: 0, scaleY: 1, ease: "expo.out" });
+  gsap.to([face, eyebrow], { duration: 1, x: 0, y: 0, skewX: 0, ease: "expo.out" });
+  gsap.to([outerEarL, outerEarR, earHairL, earHairR, hair], { duration: 1, x: 0, y: 0, scaleY: 1, ease: "expo.out" });
 }
 
 function startBlinking(delay) {
@@ -465,22 +361,13 @@ function startBlinking(delay) {
   } else {
     delay = 1;
   }
-  blinking = TweenMax.to([eyeL, eyeR], 0.1, {
-    delay: delay,
-    scaleY: 0,
-    yoyo: true,
-    repeat: 1,
-    transformOrigin: "center center",
-    onComplete: function () {
-      startBlinking(12);
-    }
-  });
+  blinking = gsap.to([eyeL, eyeR], { duration: 0.1, delay: delay, scaleY: 0, yoyo: true, repeat: 1, transformOrigin: "center center", onComplete: function () { startBlinking(12); } });
 }
 
 function stopBlinking() {
   blinking.kill();
   blinking = null;
-  TweenMax.set([eyeL, eyeR], { scaleY: eyeScale });
+  gsap.set([eyeL, eyeR], { scaleY: eyeScale });
 }
 
 function getRandomInt(max) {
@@ -565,21 +452,11 @@ function initLoginForm() {
   showPasswordToggle.addEventListener("mousedown", onPasswordToggleMouseDown);
 
   // move arms to initial positions
-  TweenMax.set(armL, {
-    x: -93,
-    y: 220,
-    rotation: 105,
-    transformOrigin: "top left"
-  });
-  TweenMax.set(armR, {
-    x: -93,
-    y: 220,
-    rotation: -105,
-    transformOrigin: "top right"
-  });
+  gsap.set(armL, { x: -93, y: 220, rotation: 105, transformOrigin: "top left" });
+  gsap.set(armR, { x: -93, y: 220, rotation: -105, transformOrigin: "top right" });
 
   // set initial mouth property (fixes positioning bug)
-  TweenMax.set(mouth, { transformOrigin: "center center" });
+  gsap.set(mouth, { transformOrigin: "center center" });
 
   // activate blinking
   startBlinking(5);
@@ -592,12 +469,11 @@ function initLoginForm() {
   if (isMobileDevice()) {
     password.type = "text";
     showPasswordCheck.checked = true;
-    TweenMax.set(twoFingers, {
+    gsap.set(twoFingers, {
       transformOrigin: "bottom left",
       rotation: 30,
       x: -9,
-      y: -2,
-      ease: Power2.easeInOut
+      y: -2
     });
   }
 
